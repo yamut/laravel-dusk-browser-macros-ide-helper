@@ -62,18 +62,27 @@ class IdeHelperBrowserMacroCommand extends Command
                 $line .= '$' . $reflectionParameter->getName();
                 if ($reflectionParameter->isDefaultValueAvailable()) {
                     $line .= ' = ' . (is_string($reflectionParameter->getDefaultValue()) ?
-                        sprintf("'%s'", $reflectionParameter->getDefaultValue()) :
-                        $reflectionParameter->getDefaultValue());
+                            sprintf("'%s'", $reflectionParameter->getDefaultValue()) :
+                            $reflectionParameter->getDefaultValue());
                 }
                 $line .= ', ';
             }
             $line = rtrim($line, ', ');
             $line .= ')';
             if ($reflectionFunction->hasReturnType()) {
-                $line .= ': ' . $reflectionFunction->getReturnType();
+                if ($reflectionFunction->getReturnType() == $this->namespace . '\\' . $this->class) {
+                    $docblock = <<<DOCBLOCK
+        /**
+         * @return \$this
+         **/
+DOCBLOCK;
+                    $line = $docblock . "\n" . $line;
+                } else {
+                    $line .= ': ' . $reflectionFunction->getReturnType();
+                }
+                $line .= " {}\n";
+                fwrite($this->file, $line);
             }
-            $line .= " {}\n";
-            fwrite($this->file, $line);
         }
         fwrite($this->file, "\t}\n}");
         fclose($this->file);
