@@ -1,0 +1,32 @@
+{
+  "name": "yamut/laravel_dusk_browser_macro_ide_helper",
+  "description": "Generates a helper file for laravel dusk browser macros",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dan Mattern",
+      "email": "dan@danmattern.com"
+    }
+  ],
+  "require": {
+    "laravel/framework": "^5.0",
+    "laravel/dusk": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yamut\\LaravelDuskMacroHelper\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Yamut\\LaravelDuskMacroHelper\\IdeHelperBrowserMacroServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "prefer-stable": true
+}
