@@ -61,12 +61,12 @@ class IdeHelperBrowserMacroCommand extends Command
                 }
                 $line .= '$' . $reflectionParameter->getName();
                 if ($reflectionParameter->isDefaultValueAvailable()) {
-                    $line .= ' = ' . (is_string($reflectionParameter->getDefaultValue()) ?
+                    $line .= ' = ';
+                    $line .= is_string($reflectionParameter->getDefaultValue()) ?
                             sprintf("'%s'", $reflectionParameter->getDefaultValue()) :
                             ($reflectionParameter->getDefaultValue() === null ?
                                 'null' :
-                                $reflectionParameter->getDefaultValue())
-                        );
+                                $reflectionParameter->getDefaultValue());
                 }
                 $line .= ', ';
             }
