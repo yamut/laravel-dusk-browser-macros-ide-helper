@@ -73,7 +73,7 @@ class IdeHelperBrowserMacroCommand extends Command
             $line = rtrim($line, ', ');
             $line .= ')';
             if ($reflectionFunction->hasReturnType()) {
-                if ($reflectionFunction->getReturnType() == $this->namespace . '\\' . $this->class) {
+                if ($reflectionFunction->getReturnType()->getName() == $this->namespace . '\\' . $this->class) {
                     $docblock = <<<DOCBLOCK
         /**
          * @return \$this
@@ -81,7 +81,7 @@ class IdeHelperBrowserMacroCommand extends Command
 DOCBLOCK;
                     $line = $docblock . "\n" . $line;
                 } else {
-                    $line .= ': ' . $reflectionFunction->getReturnType();
+                    $line .= ': ' . $reflectionFunction->getReturnType()->getName();
                 }
                 $line .= " {}\n";
                 fwrite($this->file, $line);
