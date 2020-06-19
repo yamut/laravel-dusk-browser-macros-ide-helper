@@ -66,7 +66,12 @@ class IdeHelperBrowserMacroCommand extends Command
                             sprintf("'%s'", $reflectionParameter->getDefaultValue()) :
                             ($reflectionParameter->getDefaultValue() === null ?
                                 'null' :
-                                $reflectionParameter->getDefaultValue());
+                                ((
+                                    is_array($reflectionParameter->getDefaultValue()) &&
+                                    empty($reflectionParameter->getDefaultValue())
+                                ) ?
+                                    '[]' :
+                                    $reflectionParameter->getDefaultValue()));
                 }
                 $line .= ', ';
             }
